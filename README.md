@@ -6,19 +6,16 @@ Financial Trading Application Full-Stack Developer
 * ✉️  Email [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com)
 
 ## Copy My Trades
-- **Crypto Fund @ Binance**
-   - [Explore Binance Copy Trading](https://www.binance.com/zh-TC/copy-trading/lead-details/3712048317665458945?timeRange=90D)
+- **[Explore Binance Copy Trading](https://www.binance.com/zh-TC/copy-trading/lead-details/3712048317665458945?timeRange=90D)**
 
 ## Referral Links
-- **Crypto - Binance**
-   - [Open an account on Binance](https://www.binance.com/zh-TC/activity/referral/offers)
-
-- **Forex - Kohle Capital**
-   - [Open an account with Kohle Capital](https://mt5.kohlecapital.com/zh_Hant/links/go/8042)
+### Crypto
+- **[Open an account on Binance](https://www.binance.com/zh-TC/activity/referral/offers)**
+### ForeX
+- **[Open an account with Kohle Capital](https://mt5.kohlecapital.com/zh_Hant/links/go/8042)**
 
 --------------------------------------------------
-
-<b>GitHub Stats</b>
+## GitHub Stats
 
 <div>
   <img align="center" src="https://github-readme-stats.vercel.app/api?username=MengsyueAmaoTsai&show_icons=true&theme=dark" alt="ardalis" />
@@ -30,7 +27,7 @@ Financial Trading Application Full-Stack Developer
 <a href="https://github.com/MengsyueAmaoTsai" align="left"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MengsyueAmaoTsai&langs_count=30&title_color=0891b2&text_color=ffffff&icon_color=0891b2&bg_color=1c1917&hide_border=true&locale=en&custom_title=Top%20%Languages" alt="Top Languages" /></a>
 --------------------------------------------------
 
-### Support Me
+## Support Me
 
 <ul style="list-style-type: none; margin: 0;">
 
