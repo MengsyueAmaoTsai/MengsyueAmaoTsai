@@ -1,17 +1,15 @@
-My name is Mengsyue Amao Tsai
-===================================
-
+Mengsyue Amao Tsai
+--------------------------------------------------
 Financial Trading Application Full-Stack Developer
 --------------------------------------------------
+* 🌍  Taipei, Taiwan
+* ✉️  Email [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com)
 
-* 🌍  I'm based in Taipei, Taiwan
-* ✉️  You can contact me at [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com)
-
-### Copy My Trades
+## Copy My Trades
 - **Crypto Fund @ Binance**
    - [Explore Binance Copy Trading](https://www.binance.com/zh-TC/copy-trading/lead-details/3712048317665458945?timeRange=90D)
 
-### Referral Links
+## Referral Links
 - **Crypto - Binance**
    - [Open an account on Binance](https://www.binance.com/zh-TC/activity/referral/offers)
 
