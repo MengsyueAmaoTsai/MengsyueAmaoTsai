@@ -6,13 +6,13 @@ Financial Trading Application Full-Stack Developer
 * ✉️  Email [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com)
 
 ## Copy My Trades
-- **[Explore Binance Copy Trading](https://www.binance.com/zh-TC/copy-trading/lead-details/3712048317665458945?timeRange=90D)**
+- **[Copy Trading @ Binance](https://www.binance.com/zh-TC/copy-trading/lead-details/3712048317665458945?timeRange=90D)**
 
 ## Referral Links
 ### Crypto
 - **[Open an account on Binance](https://www.binance.com/zh-TC/activity/referral/offers)**
 ### ForeX
-- **[Open an account with Kohle Capital](https://mt5.kohlecapital.com/zh_Hant/links/go/8042)**
+- **[Open an account on Kohle Capital](https://mt5.kohlecapital.com/zh_Hant/links/go/8042)**
 
 --------------------------------------------------
 ## GitHub Stats
