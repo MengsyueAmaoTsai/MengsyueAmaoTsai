@@ -11,8 +11,6 @@ Financial Trading Application Full-Stack Developer
 ## Referral Links
 ### Crypto
 - **[Open an account on Binance](https://www.binance.com/zh-TC/activity/referral/offers)**
-### ForeX
-- **[Open an account on Kohle Capital](https://mt5.kohlecapital.com/zh_Hant/links/go/8042)**
 
 --------------------------------------------------
 ## GitHub Stats
