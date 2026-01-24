@@ -1,4 +1,9 @@
 # Mengsyue Amao Tsai (Wayne)👋
+---
+
+## About Me
+I am a **Financial Trading Software Full-Stack Developer** specializing in algorithmic trading, quantitative systems, and high-performance trading solutions.  
+Passionate about building robust trading platforms and exploring innovative quantitative strategies.  
 
 ---
 
