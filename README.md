@@ -1,4 +1,4 @@
-# Mengsyue Amao Tsai (Wayne)👋
+# Mengsyue Amao Tsai (Wayne)
 ---
 
 ## About Me
