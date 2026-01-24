@@ -35,6 +35,5 @@
 ![Quantower](https://img.shields.io/badge/Quantower-DC143C?style=for-the-badge)
 ![QuantConnect](https://img.shields.io/badge/QuantConnect-DC143C?style=for-the-badge)
 ![NinjaTrader](https://img.shields.io/badge/NinjaTrader-0066CC?style=for-the-badge)
+
 ---
-
-
