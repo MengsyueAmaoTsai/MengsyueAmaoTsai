@@ -7,13 +7,6 @@
 
 ---
 
-## 📫 Contact
-✉️ Email: [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com) | [mengsyue.tsai@gmail.com](mailto:mengsyue.tsai@gmail.com)  
-📸 Instagram: [@mengsyue.tsai](https://www.instagram.com/mengsyue.tsai/)
-
----
-
-
 ## 🛠️ Skills & Technologies
 
 **Languages:**  
@@ -37,3 +30,10 @@
 ![NinjaTrader](https://img.shields.io/badge/NinjaTrader-0066CC?style=for-the-badge)
 
 ---
+## 📫 Contact
+✉️ Email: [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com) | [mengsyue.tsai@gmail.com](mailto:mengsyue.tsai@gmail.com)  
+📸 Instagram: [@mengsyue.tsai](https://www.instagram.com/mengsyue.tsai/)
+
+---
+
+
