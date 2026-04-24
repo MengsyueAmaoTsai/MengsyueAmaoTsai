@@ -4,13 +4,13 @@ name: Windows Bootstrapper CI/CD
 on:
   pull_request:
     paths:
-      - "Boostrappers/Windows/**"
+      - "Bootstrappers/Windows/**"
       - ".github/workflows/windows-bootstrapper.yml"
   push:
     branches: [ "develop" ]
     tags: [ "v*" ]
     paths:
-      - "Boostrappers/Windows/**"
+      - "Bootstrappers/Windows/**"
       - ".github/workflows/windows-bootstrapper.yml"
 
 jobs:
@@ -23,8 +23,11 @@ jobs:
       - name: PowerShell syntax check
         shell: pwsh
         run: |
-          $files = Get-ChildItem "Boostrappers/Windows" -Recurse -Filter *.ps1
-          if (-not $files) { throw "No .ps1 files found in Boostrappers/Windows" }
+          $files = Get-ChildItem "Bootstrappers/Windows" -Recurse -Filter *.ps1
+          
+          if (-not $files) { 
+            throw "No .ps1 files found in Bootstrappers/Windows" 
+          }
 
           foreach ($f in $files) {
             try {
