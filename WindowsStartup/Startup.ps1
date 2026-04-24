@@ -18,9 +18,9 @@ catch {
 $remoteProfileUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/PowerShell/Profiles/Microsoft.PowerShell_profile.ps1'
 
 try {
-    $profileContent = Invoke-WebRequest -Uri $remoteProfileUrl -UseBasicParsing
-    $profileContent | Out-File -FilePath "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Encoding UTF8
-    $profileContent | Out-File -FilePath "$HOME\Documents\PowerShell\Microsoft.VSCode_profile.ps1" -Encoding UTF8
+    $rawContent = Invoke-WebRequest -Uri $remoteProfileUrl -UseBasicParsing
+    $rawContent.Content | Out-File -FilePath "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Encoding UTF8 -Force
+    $rawContent.Content | Out-File -FilePath "$HOME\Documents\PowerShell\Microsoft.VSCode_profile.ps1" -Encoding UTF8 -Force
     
     Write-Host "PowerShell profile updated successfully."
 }
