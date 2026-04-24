@@ -1,25 +1,9 @@
 $ErrorActionPreference = 'Stop'
 
-# =====================================================================================================================
+. "$PSScriptRoot\Ensure-Service-Gpg.ps1"
+. "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
+. "$PSScriptRoot\Ensure-Service-SonarQube.ps1"
 
-
-# =====================================================================================================================
-$sonarServiceName = "SonarQube"
-$sonarService = Get-Service -Name $sonarServiceName -ErrorAction Silently
-
-if ($null -ne $sonarService) {
-    if ($sonarService.Status -ne 'Running') {
-        Write-Host "Starting SonarQube service..." -ForegroundColor Green
-        Start-Service -Name $sonarServiceName
-        Write-Host "SonarQube service started." -ForegroundColor Green
-    }
-    else {
-        Write-Host "SonarQube service is already running." -ForegroundColor Green
-    }
-}
-else {
-    Write-Host "SonarQube service not found." -ForegroundColor Yellow
-}
 # =====================================================================================================================
 Write-Host "Configure git global settings ..." -ForegroundColor Green
 
