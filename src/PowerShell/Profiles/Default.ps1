@@ -30,6 +30,11 @@ if (Get-Module -ListAvailable -Name Terminal-Icons) {
     Import-Module Terminal-Icons 
 }
 
+# 載入 WebAdminstration
+if (Get-Module -ListAvailable -Name WebAdministration) { 
+    Import-Module WebAdministration 
+}
+
 # =====================================================================================================================
 # Custom Functions
 # =====================================================================================================================
