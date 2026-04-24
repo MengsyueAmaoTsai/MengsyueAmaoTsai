@@ -1,12 +1,10 @@
-# =====================================================================================================================
-# Apply settings and configurations for Windows Terminal and PowerShell profile from the latest versions in the repository.
-# =====================================================================================================================
+# 1 | 開發環境啟動設定
 
-# 1. Apply latest WindowsTerminal settings
-$remoteTerminalSettingsUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/WindowsTerminal/settings.json'
+# | 套用預設 WindowsTerminal 設定檔
+# $remoteTerminalSettingsUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/WindowsTerminal/settings.json'
 
 try {
-    $localTerminalSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+    $localTerminalSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\default.json"
     Invoke-WebRequest -Uri $remoteTerminalSettingsUrl -OutFile $localTerminalSettingsPath
     Write-Host "Windows Terminal settings updated successfully."
 }
@@ -14,7 +12,7 @@ catch {
     Write-Host "Failed to update Windows Terminal settings: $_"
 }
 
-# 2. Apply latest PowerShell profile
+# | 套用預設 PowerShell 配置檔
 $remoteProfileUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/PowerShell/Profiles/Default.ps1'
 
 try {
@@ -28,7 +26,7 @@ catch {
     Write-Host "Failed to update PowerShell profile: $_"
 }
 
-# 3. Apply git configuration
+# | 配置 Git 全局設定
 git config --global user.name "Mengsyue Amao Tsai"
 git config --global user.email "mengsyue.tsai@outlook.com"
 git config --global user.signingkey "BB37B25BE7811D2AF2B9BB07EEB29E2560FA663C"
@@ -39,10 +37,9 @@ git config --global color.ui auto
 git config --global commit.gpgsign true
 git config --global gpg.program "C:\Program Files\GnuPG\bin\gpg.exe"
 
-# =====================================================================================================================
-# Ensure required services are running
-# =====================================================================================================================
-# 1. Ensure SonarQube Scanner service is running
+
+# 1-2 | 啟動開發相關服務
+# | 確保 SonarQube 服務正在運行
 $sonarServiceName = "SonarQube"
 $sonarService = Get-Service -Name $sonarServiceName -ErrorAction SilentlyContinue
 
