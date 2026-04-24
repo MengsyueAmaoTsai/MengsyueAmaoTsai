@@ -4,7 +4,7 @@ try {
     $profileContent = Invoke-WebRequest -Uri $remoteProfileUrl -UseBasicParsing -ErrorAction Stop
     Set-Content -Path "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value $profileContent.Content -Force
     Set-Content -Path "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1" -Value $profileContent.Content -Force
-    Write-Host "PowerShell profiles have been updated successfully."
+    Write-Host "PowerShell profiles have been updated successfully." -ForegroundColor Green
 }
 catch {
     Write-Error "Failed to update PowerShell profiles: $_"
