@@ -1,5 +1,8 @@
 $ErrorActionPreference = 'Stop'
 
+. "$PSScriptRoot\Update-WindowsTerminalSettings.ps1"
+. "$PSScriptRoot\Update-PowerShellProfile.ps1"
+
 . "$PSScriptRoot\Ensure-Service-Gpg.ps1"
 . "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
 . "$PSScriptRoot\Ensure-Service-SonarQube.ps1"
