@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 3,
+  "final_space": true,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "plain",
+          "foreground": "#89ddff",
+          "template": "{{.Icon}} "
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "#7aa2f7",
+          "options": {
+            "style": "folder",
+            "folder_icon": " ",
+            "home_icon": "~"
+          },
+          "template": "{{ .Path }} "
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#9ece6a",
+          "options": {
+            "branch_icon": " ",
+            "fetch_status": true
+          },
+          "template": "{{ .HEAD }}{{ if .Working.Changed }}*{{ end }} "
+        },
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "#f7768e",
+          "options": {
+            "always_enabled": false
+          },
+          "template": "✖ {{ .Code }} "
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "time",
+          "style": "plain",
+          "foreground": "#c0caf5",
+          "options": {
+            "time_format": "15:04:05"
+          },
+          "template": " {{ .CurrentDate | date .Format }} "
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#7aa2f7",
+          "template": "❯ "
+        }
+      ]
+    }
+  ]
+}
