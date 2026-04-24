@@ -1,0 +1,40 @@
+name: Windows Bootstrapper CI/CD
+
+
+on:
+  pull_request:
+    paths:
+      - "Boostrappers/Windows/**"
+      - ".github/workflows/windows-bootstrapper.yml"
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+    paths:
+      - "Boostrappers/Windows/**"
+      - ".github/workflows/windows-bootstrapper.yml"
+
+jobs:
+  ci:
+    name: CI - Lint & Validate PowerShell
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PowerShell syntax check
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem "Boostrappers/Windows" -Recurse -Filter *.ps1
+          if (-not $files) { throw "No .ps1 files found in Boostrappers/Windows" }
+
+          foreach ($f in $files) {
+            try {
+              [System.Management.Automation.Language.Parser]::ParseFile(
+                $f.FullName,
+                [ref]$null,
+                [ref]$null
+              ) | Out-Null
+              Write-Host "OK: $($f.FullName)"
+            } catch {
+              throw "Syntax error in $($f.FullName): $($_.Exception.Message)"
+            }
+          }
