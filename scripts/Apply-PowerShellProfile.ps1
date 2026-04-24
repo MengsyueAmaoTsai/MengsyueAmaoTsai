@@ -1,4 +1,3 @@
-# ./scripts/Apply-PowerShellProfile.ps1
 $rootDirectory = (Get-Location).Path
 
 $profileContent = Get-Content -Path "$rootDirectory\src\PowerShell\Profiles\Default.ps1" -Raw
