@@ -6,6 +6,7 @@ $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot\Ensure-Service-Gpg.ps1"
 . "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
 . "$PSScriptRoot\Ensure-Service-SonarQube.ps1"
+. "$PSScriptRoot\Ensure-Service-IIS.ps1"
 
 # =====================================================================================================================
 Write-Host "Configure git global settings ..." -ForegroundColor Green
