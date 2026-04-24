@@ -1,44 +1,21 @@
-# Mengsyue Amao Tsai (Wayne)
----
+# Hi, I'm Mengsyue Amao Tsai 👋
 
-## About Me
-I am a **Financial Trading Software Full-Stack Developer** specializing in algorithmic trading, quantitative systems, and high-performance trading solutions.  
-Passionate about building robust trading platforms and exploring innovative quantitative strategies.  
+> Financial Trading Systems Engineer from Taiwan.
 
----
+## 🚀 About Me
+- 💼 Open to **collaboration** and **freelance** opportunities.
+- 🧠 Focused on building robust, low-latency, and practical trading software.
+- 🌏 Based in Taiwan.
 
-## 🏢 Company
-**Futures-AI** – Financial Trading Software & Quantitative Solutions  
+## 🛠 Tech Stack
+- **Languages**: C#, TypeScript, JavaScript, Python, Rust, C++, MQL5, Pine Script, XScript, PowerLanguage, EasyLanguage, NinjaScript
+- **Framework**: Tauri, PyQt, WPF, MAUI, WinUI3, Angular, Next.JS, Nuxt, Astro.js, Svelte, ASP.NET Core, ASP.NET Razor Pages, ASP.NET Blazor
+- **Trading-platform**: TradeStation, MultiCharts, MultiCharts.NET, XQs, TradingView, NinjaTrader, MetaTrade5, cTrader, Quantower, QuantConnect
 
----
+## 📈 GitHub Stats
+![Mengsyue's GitHub stats](https://github-readme-stats.vercel.app/api?username=MengsyueAmaoTsai&show_icons=true&theme=default)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=MengsyueAmaoTsai&layout=compact)
 
-## 🛠️ Skills & Technologies
-
-**Languages:**  
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Cython](https://img.shields.io/badge/Cython-306998?style=for-the-badge&logo=python&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
-
-**Trading Platforms:**  
-![TradingView](https://img.shields.io/badge/TradingView-FF6600?style=for-the-badge)
-![MultiCharts](https://img.shields.io/badge/MultiCharts-000000?style=for-the-badge)
-![TradeStation](https://img.shields.io/badge/TradeStation-2A2A2A?style=for-the-badge)
-![XQ](https://img.shields.io/badge/XQ-007ACC?style=for-the-badge)
-![MetaTrader5](https://img.shields.io/badge/MetaTrader5-0E8EC0?style=for-the-badge)
-![cTrader](https://img.shields.io/badge/cTrader-FF6600?style=for-the-badge)
-![MultiCharts.NET](https://img.shields.io/badge/MultiCharts.NET-239120?style=for-the-badge)
-![Quantower](https://img.shields.io/badge/Quantower-DC143C?style=for-the-badge)
-![QuantConnect](https://img.shields.io/badge/QuantConnect-DC143C?style=for-the-badge)
-![NinjaTrader](https://img.shields.io/badge/NinjaTrader-0066CC?style=for-the-badge)
-
----
-## 📫 Contact
-✉️ Email: [mengsyue.tsai@outlook.com](mailto:mengsyue.tsai@outlook.com) | [mengsyue.tsai@gmail.com](mailto:mengsyue.tsai@gmail.com)  
-📸 Instagram: [@mengsyue.tsai](https://www.instagram.com/mengsyue.tsai/)
-
----
-
-
+## 🤝 Contact
+- Email: [mengsyue.tsai@outlook.com]
+- Instagram: [https://www.instagram.com/mengsyue.tsai/]
