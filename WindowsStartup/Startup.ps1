@@ -15,7 +15,7 @@ catch {
 }
 
 # 2. Apply latest PowerShell profile
-$remoteProfileUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/PowerShell/Profiles/Microsoft.PowerShell_profile.ps1'
+$remoteProfileUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/PowerShell/Profiles/Default.ps1'
 
 try {
     $rawContent = Invoke-WebRequest -Uri $remoteProfileUrl -UseBasicParsing
