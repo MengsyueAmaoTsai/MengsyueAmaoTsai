@@ -37,3 +37,12 @@ git config --global color.ui auto
 git config --global gpg.program "C:\Program Files\GnuPG\bin\gpg.exe"
 
 Write-Host "Git global settings configured successfully." -ForegroundColor Green
+
+# =====================================================================================================================
+
+if (Get-Command "wt" -ErrorAction SilentlyContinue) {
+    Start-Process "wt" 
+}
+else {
+    Write-Host "Windows Terminal is not installed. Please install it from the Microsoft Store." -ForegroundColor Yellow
+}
