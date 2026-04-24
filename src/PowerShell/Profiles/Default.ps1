@@ -55,7 +55,7 @@ function Write-Log {
 # Prompt Customization with oh-my-posh
 # =====================================================================================================================
 if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
-    $remoteThemeUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/OhMyPosh/Themes/default.omp.json'
+    $remoteThemeUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/src/OhMyPosh/Themes/default.omp.json'
     $cachedTheme = Join-Path $PSScriptRoot 'default.remote.omp.json'
     $localTheme = Join-Path $PSScriptRoot 'default.omp.json'
 
