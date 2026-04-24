@@ -7,6 +7,14 @@ param(
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
+# 檢查是否為系統管理員（建立開機排程需要）
+$identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+$principal = New-Object Security.Principal.WindowsPrincipal($identity)
+
+if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    throw "請使用系統管理員權限執行此腳本。"
+}
+
 # Release 資產下載網址（zip 與 sha256）
 $Tag = "v$Version"
 $ZipUrl = "https://github.com/MengsyueAmaoTsai/MengsyueAmaoTsai/releases/download/$Tag/windows-bootstrapper.zip"
@@ -45,4 +53,25 @@ New-Item -ItemType Directory -Force -Path $targetPath | Out-Null
 Get-ChildItem -Path $targetPath -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 Expand-Archive -Path $zipPath -DestinationPath $targetPath -Force
 
-Write-Host "Done. Installed $Tag to $targetPath"
+
+# 6. 註冊開機排程：啟動 Initialize.ps1
+Write-Host "[6/6] Registering startup scheduled task..."
+$entryPoint = Join-Path $targetPath "Initialize.ps1"
+
+if (-not (Test-Path -Path $entryPoint)) {
+    throw "Entry point not found: $entryPoint"
+}
+
+$taskName = "Boostrapper-Initialize"
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$entryPoint`""
+$trigger = New-ScheduledTaskTrigger -AtStartup
+$principalTask = New-ScheduledTaskPrincipal -UserId "SYSTEM" -RunLevel Highest -LogonType ServiceAccount
+$settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+
+# 若已存在同名工作，先移除再重建
+if (Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue) {
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+}
+
+Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principalTask -Settings $settings | Out-Null
+Write-Host "Done. Installed $Tag to $targetPath and scheduled task '$taskName'."
