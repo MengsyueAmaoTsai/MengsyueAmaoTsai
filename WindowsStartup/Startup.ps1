@@ -3,7 +3,7 @@
 # =====================================================================================================================
 
 # 1. Apply latest WindowsTerminal settings
-$remoteTerminalSettingsUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/windows-terminal/settings.json'
+$remoteTerminalSettingsUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/WindowsTerminal/settings.json'
 
 try {
     $localTerminalSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
@@ -15,7 +15,7 @@ catch {
 }
 
 # 2. Apply latest PowerShell profile
-$remoteProfileUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/powershell/profiles/Microsoft.PowerShell_profile.ps1'
+$remoteProfileUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/PowerShell/Profiles/Microsoft.PowerShell_profile.ps1'
 
 try {
     $localProfilePath = "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
