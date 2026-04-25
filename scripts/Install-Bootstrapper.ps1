@@ -28,6 +28,8 @@ $taskName = "Bootstrapper"
 $taskPath = "\MengsyueAmaoTsai\"
 $entryScript = Join-Path $targetDirectory "Start-Bootstrapper.ps1"
 
+$currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+
 if (-not (Test-Path $entryScript)) {
     throw "Entry script not found: $entryScript"
 }
@@ -44,7 +46,7 @@ $action = New-ScheduledTaskAction `
     -Execute "pwsh.exe" `
     -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$entryScript`""
 
-$trigger = New-ScheduledTaskTrigger -AtStartup
+$trigger = New-ScheduledTaskTrigger -AtLogOn -User $currentUser
 
 $settings = New-ScheduledTaskSettingsSet `
     -StartWhenAvailable `
@@ -53,8 +55,8 @@ $settings = New-ScheduledTaskSettingsSet `
     -ExecutionTimeLimit (New-TimeSpan -Hours 1)
 
 $principalTask = New-ScheduledTaskPrincipal `
-    -UserId "SYSTEM" `
-    -LogonType ServiceAccount `
+    -UserId $currentUser `
+    -LogonType Interactive `
     -RunLevel Highest
 
 Register-ScheduledTask `
