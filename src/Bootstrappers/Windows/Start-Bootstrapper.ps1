@@ -30,6 +30,7 @@ Write-Host "Git global settings configured successfully." -ForegroundColor Green
 # =====================================================================================================================
 
 if (Get-Command "wt" -ErrorAction SilentlyContinue) {
+    Read-Host "Press Enter to launch Windows Terminal with the new settings..."
     Start-Process "wt" 
 }
 else {
