@@ -28,6 +28,29 @@ git config --global gpg.program "C:\Program Files\GnuPG\bin\gpg.exe"
 Write-Host "Git global settings configured successfully." -ForegroundColor Green
 
 # =====================================================================================================================
+## Launch productivity applications (uncomment to enable)
+
+# $executables = @(
+#     "C:\Users\$env:USERNAME\AppData\Local\Discord\app-*\Discord.exe",
+#     "C:\Users\$env:USERNAME\AppData\Local\LINE\bin\current\LINE.exe ",
+#     "C:\Users\$env:USERNAME\AppData\Roaming\Telegram Desktop\Telegram.exe",
+#     "C:\Program Files\WindowsApps\com.tinyspeck.slackdesktop_*_x64__8yrtsj140pw4g\app\Slack.exe",
+#     "C:\Program Files\WindowsApps\Microsoft.OutlookForWindows_1.2026.420.300_x64__8wekyb3d8bbwe\olk.exe",
+#     "C:\Program Files\WindowsApps\MSTeams_26032.214.4445.5584_x64__8wekyb3d8bbwe\ms-teams.exe"
+# )
+
+# foreach ($exe in $executables) {
+#     $path = Get-ChildItem -Path $exe -ErrorAction SilentlyContinue | Select-Object -First 1
+#     if ($path) {
+#         Start-Process $path.FullName
+#         Write-Host "Launched: $($path.FullName)" -ForegroundColor Green
+#     }
+#     else {
+#         Write-Host "Executable not found: $exe" -ForegroundColor Yellow
+#     }
+# }
+
+# =====================================================================================================================
 
 if (Get-Command "wt" -ErrorAction SilentlyContinue) {
     Read-Host "Press Enter to launch Windows Terminal with the new settings..."
