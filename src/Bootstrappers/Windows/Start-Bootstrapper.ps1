@@ -53,8 +53,10 @@ Write-Host "Git global settings configured successfully." -ForegroundColor Green
 # =====================================================================================================================
 
 if (Get-Command "wt" -ErrorAction SilentlyContinue) {
-    Read-Host "Press Enter to launch Windows Terminal with the new settings..."
-    Start-Process "wt" 
+    $answer = Read-Host "Do you want to launch Windows Terminal? (Y/N)"
+    if ($answer -eq "Y") {
+        Start-Process "wt" 
+    }
 }
 else {
     Write-Host "Windows Terminal is not installed. Please install it from the Microsoft Store." -ForegroundColor Yellow
