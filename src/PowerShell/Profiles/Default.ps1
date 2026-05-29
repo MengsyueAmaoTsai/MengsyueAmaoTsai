@@ -55,6 +55,20 @@ function Write-Log {
     Write-Host "[$timestamp] [$Level] - $Message" -ForegroundColor $color
 }  
 
+function msbuild {
+    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    if (-not (Test-Path $vswhere)) {
+        throw "vswhere.exe not found. Install Visual Studio Build Tools."
+    }
+
+    $msbuildExecutable = & $vswhere -latest -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
+    
+    if (-not $msbuildExecutable) {
+        throw "MSBuild.exe not found. Install MSBuild workload."
+    }    
+
+    & $msbuildExecutable @args
+}
 
 # =====================================================================================================================
 # Prompt Customization with oh-my-posh
