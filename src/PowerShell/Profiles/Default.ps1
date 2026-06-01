@@ -13,6 +13,19 @@ $env:TZ = 'UTC'  # 統一時區為 UTC
 $PSStyle.OutputRendering = 'Host'  # 固定輸出渲染行為，減少不同終端造成的可讀性差異
 $MaximumHistoryCount = 5000  # 限制指令歷史數量，兼顧追溯需求與本機資料暴露風險
 
+# set ms build to environment path
+$vswherePath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+
+if (Test-Path $vswherePath) {
+    $msbuildPath = & $vswherePath -latest -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
+
+    if ($msbuildPath) {
+        $env:PATH += ";$($msbuildPath | Split-Path -Parent)"
+    }
+}
+
+
+
 # =====================================================================================================================
 # Import Modules 
 # =====================================================================================================================
@@ -54,21 +67,6 @@ function Write-Log {
     
     Write-Host "[$timestamp] [$Level] - $Message" -ForegroundColor $color
 }  
-
-function msbuild {
-    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    if (-not (Test-Path $vswhere)) {
-        throw "vswhere.exe not found. Install Visual Studio Build Tools."
-    }
-
-    $msbuildExecutable = & $vswhere -latest -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
-    
-    if (-not $msbuildExecutable) {
-        throw "MSBuild.exe not found. Install MSBuild workload."
-    }    
-
-    & $msbuildExecutable @args
-}
 
 # =====================================================================================================================
 # Prompt Customization with oh-my-posh
