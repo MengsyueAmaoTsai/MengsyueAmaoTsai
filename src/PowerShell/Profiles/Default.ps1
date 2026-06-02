@@ -24,6 +24,15 @@ if (Test-Path $vswherePath) {
     }
 }
 
+# set tlbimp to environment path. 
+$windowsSdkPath = "${env:ProgramFiles(x86)}\Microsoft SDKs\Windows"
+if (Test-Path $windowsSdkPath) {
+    $tlbimpPath = Get-ChildItem -Path $windowsSdkPath -Recurse -Filter "tlbimp.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+
+    if ($tlbimpPath) {
+        $env:PATH += ";$($tlbimpPath.DirectoryName)"
+    }
+}
 
 
 # =====================================================================================================================
