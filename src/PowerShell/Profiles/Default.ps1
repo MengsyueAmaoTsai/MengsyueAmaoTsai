@@ -49,7 +49,11 @@ if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
 
 # 載入Terminal-Icons
 if (Get-Module -ListAvailable -Name Terminal-Icons) { 
-    Import-Module Terminal-Icons 
+    try {
+        Import-Module Terminal-Icons -ErrorAction Stop
+    } catch {
+        Write-Warning "Failed to import Terminal-Icons: $($_.Exception.Message)"
+    }
 }
 
 # 載入 WebAdminstration
@@ -118,3 +122,4 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
 } else {
     Write-Log -Message "oh-my-posh not found, skipping prompt customization." -Level 'WARN'
 }
+
