@@ -18,4 +18,3 @@
 
 ## 🤝 Contact
 - Email: [mengsyue.tsai@outlook.com]
-- Instagram: [https://www.instagram.com/mengsyue.tsai/]
