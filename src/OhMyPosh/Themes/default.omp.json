@@ -10,13 +10,13 @@
         {
           "type": "os",
           "style": "plain",
-          "foreground": "#707d94",
+          "foreground": "#626c7a",
           "template": "{{.Icon}} "
         },
         {
           "type": "path",
           "style": "plain",
-          "foreground": "#8b93b0",
+          "foreground": "#b0b8c6",
           "options": {
             "style": "folder",
             "folder_icon": " ",
@@ -27,7 +27,7 @@
         {
           "type": "git",
           "style": "plain",
-          "foreground": "#7d9a86",
+          "foreground": "#71947f",
           "options": {
             "branch_icon": " ",
             "fetch_status": true
@@ -37,7 +37,7 @@
         {
           "type": "dotnet",
           "style": "plain",
-          "foreground": "#9b84ad",
+          "foreground": "#8975a5",
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -47,7 +47,7 @@
         {
           "type": "node",
           "style": "plain",
-          "foreground": "#6f9a93",
+          "foreground": "#5f928b",
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -57,7 +57,7 @@
         {
           "type": "python",
           "style": "plain",
-          "foreground": "#b0996a",
+          "foreground": "#a38e65",
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -67,7 +67,7 @@
         {
           "type": "rust",
           "style": "plain",
-          "foreground": "#ad7d63",
+          "foreground": "#9b6857",
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -77,7 +77,7 @@
         {
           "type": "cmake",
           "style": "plain",
-          "foreground": "#7e93ab",
+          "foreground": "#6d849e",
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -87,7 +87,7 @@
         {
           "type": "status",
           "style": "plain",
-          "foreground": "#a8505f",
+          "foreground": "#ac5363",
           "options": {
             "always_enabled": false
           },
@@ -102,7 +102,7 @@
         {
           "type": "time",
           "style": "plain",
-          "foreground": "#6c7488",
+          "foreground": "#596273",
           "options": {
             "time_format": "15:04:05"
           },
@@ -118,7 +118,7 @@
         {
           "type": "text",
           "style": "plain",
-          "foreground": "#9a6c82",
+          "foreground": "#96627d",
           "template": "❯ "
         }
       ]
