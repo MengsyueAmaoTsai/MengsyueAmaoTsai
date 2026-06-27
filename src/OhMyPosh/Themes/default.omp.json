@@ -10,16 +10,16 @@
         {
           "type": "os",
           "style": "plain",
-          "foreground": "#89ddff",
+          "foreground": "#707d94",
           "template": "{{.Icon}} "
         },
         {
           "type": "path",
           "style": "plain",
-          "foreground": "#7aa2f7",
+          "foreground": "#8b93b0",
           "options": {
             "style": "folder",
-            "folder_icon": " ",
+            "folder_icon": " ",
             "home_icon": "~"
           },
           "template": "{{ .Path }} "
@@ -27,17 +27,67 @@
         {
           "type": "git",
           "style": "plain",
-          "foreground": "#9ece6a",
+          "foreground": "#7d9a86",
           "options": {
-            "branch_icon": " ",
+            "branch_icon": " ",
             "fetch_status": true
           },
           "template": "{{ .HEAD }}{{ if .Working.Changed }}*{{ end }} "
         },
         {
+          "type": "dotnet",
+          "style": "plain",
+          "foreground": "#9b84ad",
+          "options": {
+            "display_mode": "files",
+            "fetch_version": true
+          },
+          "template": " {{ .Full }} "
+        },
+        {
+          "type": "node",
+          "style": "plain",
+          "foreground": "#6f9a93",
+          "options": {
+            "display_mode": "files",
+            "fetch_version": true
+          },
+          "template": " {{ .Full }} "
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "foreground": "#b0996a",
+          "options": {
+            "display_mode": "files",
+            "fetch_version": true
+          },
+          "template": " {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }} "
+        },
+        {
+          "type": "rust",
+          "style": "plain",
+          "foreground": "#ad7d63",
+          "options": {
+            "display_mode": "files",
+            "fetch_version": true
+          },
+          "template": " {{ .Full }} "
+        },
+        {
+          "type": "cmake",
+          "style": "plain",
+          "foreground": "#7e93ab",
+          "options": {
+            "display_mode": "files",
+            "fetch_version": true
+          },
+          "template": " {{ .Full }} "
+        },
+        {
           "type": "status",
           "style": "plain",
-          "foreground": "#f7768e",
+          "foreground": "#a8505f",
           "options": {
             "always_enabled": false
           },
@@ -52,11 +102,11 @@
         {
           "type": "time",
           "style": "plain",
-          "foreground": "#c0caf5",
+          "foreground": "#6c7488",
           "options": {
             "time_format": "15:04:05"
           },
-          "template": " {{ .CurrentDate | date .Format }} "
+          "template": " {{ .CurrentDate | date .Format }} "
         }
       ]
     },
@@ -68,7 +118,7 @@
         {
           "type": "text",
           "style": "plain",
-          "foreground": "#7aa2f7",
+          "foreground": "#9a6c82",
           "template": "❯ "
         }
       ]
