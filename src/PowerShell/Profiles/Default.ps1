@@ -85,24 +85,11 @@ function Write-Log {
 # Prompt Customization with oh-my-posh
 # =====================================================================================================================
 if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
-    $remoteThemeUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master/src/OhMyPosh/Themes/default.omp.json'
-    $cachedTheme = Join-Path $PSScriptRoot 'default.remote.omp.json'
     $localTheme = Join-Path $PSScriptRoot 'default.omp.json'
 
     $themeToUse = $null
 
-    try {
-        Invoke-WebRequest -Uri $remoteThemeUrl -OutFile $cachedTheme -TimeoutSec 8
-        $themeToUse = $cachedTheme
-    } catch {
-        Write-Log -Message "Failed to download remote theme: $remoteThemeUrl." -Level 'WARN'
-    }
-
-    if (-not $themeToUse -and (Test-Path $cachedTheme)) {
-        $themeToUse = $cachedTheme
-    } 
-    
-    if (-not $themeToUse -and (Test-Path $localTheme)) {
+    if (Test-Path $localTheme) {
         $themeToUse = $localTheme
     }
 

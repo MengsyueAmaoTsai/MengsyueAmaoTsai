@@ -1,7 +1,10 @@
 $ErrorActionPreference = 'Stop'
 
-. "$PSScriptRoot\Update-WindowsTerminalSettings.ps1"
-. "$PSScriptRoot\Update-PowerShellProfile.ps1"
+& "$PSScriptRoot\Update-WindowsTerminalSettings.ps1"
+& "$PSScriptRoot\Update-PowerShellProfile.ps1"
+& "$PSScriptRoot\Update-OhMyPoshTheme.ps1"
+
+Write-Host "Remote terminal, PowerShell, and prompt settings have been installed. Open a new terminal session to apply them." -ForegroundColor Green
 
 . "$PSScriptRoot\Ensure-Service-Gpg.ps1"
 . "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
