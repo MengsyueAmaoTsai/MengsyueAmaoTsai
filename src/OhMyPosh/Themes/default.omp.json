@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "version": 3,
+  "version": 4,
   "final_space": true,
   "blocks": [
     {
@@ -12,6 +12,12 @@
           "style": "plain",
           "foreground": "#626c7a",
           "template": "{{.Icon}} "
+        },
+        {
+          "type": "session",
+          "style": "plain",
+          "foreground": "#a66f66",
+          "template": "{{ if .SSHSession }}SSH {{ .UserName }}@{{ .HostName }} {{ end }}"
         },
         {
           "type": "path",
@@ -30,14 +36,17 @@
           "foreground": "#71947f",
           "options": {
             "branch_icon": " ",
+            "branch_identical_icon": "",
             "fetch_status": true
           },
-          "template": "{{ .HEAD }}{{ if .Working.Changed }}*{{ end }} "
+          "template": "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Staging.Changed }} S:{{ .Staging.String }}{{ end }}{{ if .Working.Changed }} W:{{ .Working.String }}{{ end }}{{ if gt .StashCount 0 }} stash:{{ .StashCount }}{{ end }} "
         },
         {
           "type": "dotnet",
           "style": "plain",
           "foreground": "#8975a5",
+          "min_width": 100,
+          "timeout": 500,
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -48,6 +57,8 @@
           "type": "node",
           "style": "plain",
           "foreground": "#5f928b",
+          "min_width": 100,
+          "timeout": 500,
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -58,6 +69,8 @@
           "type": "python",
           "style": "plain",
           "foreground": "#a38e65",
+          "min_width": 100,
+          "timeout": 500,
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -68,6 +81,8 @@
           "type": "rust",
           "style": "plain",
           "foreground": "#9b6857",
+          "min_width": 100,
+          "timeout": 500,
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -78,6 +93,8 @@
           "type": "cmake",
           "style": "plain",
           "foreground": "#6d849e",
+          "min_width": 100,
+          "timeout": 500,
           "options": {
             "display_mode": "files",
             "fetch_version": true
@@ -92,6 +109,18 @@
             "always_enabled": false
           },
           "template": "✖ {{ .Code }} "
+        },
+        {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "#6d849e",
+          "min_width": 80,
+          "options": {
+            "threshold": 2000,
+            "style": "austin",
+            "always_enabled": false
+          },
+          "template": "took {{ .FormattedMs }} "
         }
       ]
     },
@@ -106,7 +135,7 @@
           "options": {
             "time_format": "15:04:05"
           },
-          "template": " {{ .CurrentDate | date .Format }} "
+          "template": " {{ .CurrentDate | date .Format }} · {{ dateInZone \"15:04Z\" .CurrentDate \"UTC\" }} "
         }
       ]
     },
