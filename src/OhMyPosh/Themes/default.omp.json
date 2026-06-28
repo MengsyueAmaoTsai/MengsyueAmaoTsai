@@ -42,7 +42,7 @@
             "display_mode": "files",
             "fetch_version": true
           },
-          "template": " {{ .Full }} "
+          "template": "   {{ .Full }} "
         },
         {
           "type": "node",
@@ -52,7 +52,7 @@
             "display_mode": "files",
             "fetch_version": true
           },
-          "template": " {{ .Full }} "
+          "template": "  {{ .Full }} "
         },
         {
           "type": "python",
@@ -62,7 +62,7 @@
             "display_mode": "files",
             "fetch_version": true
           },
-          "template": " {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }} "
+          "template": "  {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }} "
         },
         {
           "type": "rust",
@@ -72,7 +72,7 @@
             "display_mode": "files",
             "fetch_version": true
           },
-          "template": " {{ .Full }} "
+          "template": "  {{ .Full }} "
         },
         {
           "type": "cmake",
@@ -82,7 +82,7 @@
             "display_mode": "files",
             "fetch_version": true
           },
-          "template": " {{ .Full }} "
+          "template": "  {{ .Full }} "
         },
         {
           "type": "status",
