@@ -3,6 +3,8 @@ param(
     [string]$DestinationPath = "$env:USERPROFILE\Documents\PowerShell\default.omp.json"
 )
 
+. "$PSScriptRoot\Bootstrapper.Output.ps1"
+
 $destinationDirectory = Split-Path -Parent $DestinationPath
 $temporaryPath = Join-Path $destinationDirectory ".theme.$([guid]::NewGuid().ToString('N')).json"
 $separator = if ($RemoteThemeUrl.Contains('?')) { '&' } else { '?' }
@@ -18,7 +20,7 @@ try {
     }
 
     Move-Item -LiteralPath $temporaryPath -Destination $DestinationPath -Force
-    Write-Host "Oh My Posh theme updated: $DestinationPath" -ForegroundColor Green
+    Write-BootstrapperStatus -Level OK -Message 'Oh My Posh theme updated'
 }
 catch {
     throw "Failed to update Oh My Posh theme: $($_.Exception.Message)"

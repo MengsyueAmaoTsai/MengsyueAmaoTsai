@@ -48,13 +48,30 @@ Bootstrapper 下載的是遠端內容，不是目前 working tree。只有存在
    & .\src\Bootstrappers\Windows\Start-Bootstrapper.ps1
    ```
 
-4. 等待下列三項成功訊息：
+4. 確認各區段顯示成功狀態：
 
    ```text
-   Windows Terminal settings updated: ...
-   PowerShell profile updated: ...
-   Oh My Posh theme updated: ...
+   Windows workstation bootstrap
+   --------------------------------
+
+   :: Settings
+     [OK] Windows Terminal settings updated
+     [OK] PowerShell profiles updated
+     [OK] Oh My Posh theme updated
+
+   :: Services and agents
+     [OK] Gpg4win installed
+     [OK] GPG agent running
+     [OK] SSH agent already running
+
+   :: Git
+     [OK] Global settings configured
+
+   :: Complete
+     [OK] Bootstrap completed successfully
    ```
+
+   `[SKIP]` 表示選用元件未安裝或略過，不視為錯誤；`[WARN]` 表示需要留意但 bootstrapper 可以繼續。
 
 5. 關閉目前的 Windows Terminal 或 VS Code terminal，重新開啟新的 terminal session。
 

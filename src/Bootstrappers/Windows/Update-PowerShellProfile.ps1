@@ -6,6 +6,8 @@ param(
     )
 )
 
+. "$PSScriptRoot\Bootstrapper.Output.ps1"
+
 $profileDirectory = Split-Path -Parent $DestinationPaths[0]
 $temporaryPath = Join-Path $profileDirectory ".profile.$([guid]::NewGuid().ToString('N')).ps1"
 $separator = if ($RemoteProfileUrl.Contains('?')) { '&' } else { '?' }
@@ -31,8 +33,9 @@ try {
         $destinationDirectory = Split-Path -Parent $destinationPath
         New-Item -ItemType Directory -Path $destinationDirectory -Force | Out-Null
         Copy-Item -LiteralPath $temporaryPath -Destination $destinationPath -Force
-        Write-Host "PowerShell profile updated: $destinationPath" -ForegroundColor Green
     }
+
+    Write-BootstrapperStatus -Level OK -Message "PowerShell profiles updated ($($DestinationPaths.Count) targets)"
 }
 catch {
     throw "Failed to update PowerShell profiles: $($_.Exception.Message)"

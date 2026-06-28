@@ -1,16 +1,18 @@
+. "$PSScriptRoot\Bootstrapper.Output.ps1"
+
 $iisServiceName = "W3SVC"
 $iisService = Get-Service -Name $iisServiceName -ErrorAction Silently
 
 if ($null -ne $iisService) {
     if ($iisService.Status -ne 'Running') {
-        Write-Host "Starting IIS service..." -ForegroundColor Green
+        Write-BootstrapperStatus -Level INFO -Message 'Starting IIS'
         Start-Service -Name $iisServiceName
-        Write-Host "IIS service started." -ForegroundColor Green
+        Write-BootstrapperStatus -Level OK -Message 'IIS started'
     }
     else {
-        Write-Host "IIS service is already running." -ForegroundColor Green
+        Write-BootstrapperStatus -Level OK -Message 'IIS already running'
     }
 }
 else {
-    Write-Host "IIS service not found." -ForegroundColor Yellow
+    Write-BootstrapperStatus -Level SKIP -Message 'IIS service not found'
 }

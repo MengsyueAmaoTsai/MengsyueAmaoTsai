@@ -3,6 +3,8 @@ param(
     [string]$DestinationPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 )
 
+. "$PSScriptRoot\Bootstrapper.Output.ps1"
+
 $destinationDirectory = Split-Path -Parent $DestinationPath
 $temporaryPath = Join-Path $destinationDirectory ".settings.$([guid]::NewGuid().ToString('N')).json"
 $separator = if ($RemoteSettingsUrl.Contains('?')) { '&' } else { '?' }
@@ -18,7 +20,7 @@ try {
     }
 
     Move-Item -LiteralPath $temporaryPath -Destination $DestinationPath -Force
-    Write-Host "Windows Terminal settings updated: $DestinationPath" -ForegroundColor Green
+    Write-BootstrapperStatus -Level OK -Message 'Windows Terminal settings updated'
 }
 catch {
     throw "Failed to update Windows Terminal settings: $($_.Exception.Message)"
