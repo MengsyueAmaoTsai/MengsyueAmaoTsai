@@ -47,12 +47,46 @@ if ((Get-Module -ListAvailable -Name PSReadLine) -and $host.Name -eq 'ConsoleHos
 if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) { 
 }  
 
+function Reset-TerminalIconsUserCache {
+    $basePath = $env:APPDATA
+    if (-not $basePath) {
+        $basePath = [Environment]::GetFolderPath('ApplicationData')
+    }
+
+    if (-not $basePath) {
+        return $null
+    }
+
+    $cachePath = [IO.Path]::Combine($basePath, 'powershell', 'Community', 'Terminal-Icons')
+    if (-not (Test-Path -LiteralPath $cachePath)) {
+        return $null
+    }
+
+    $parentPath = Split-Path -Parent $cachePath
+    $backupPath = Join-Path $parentPath "Terminal-Icons.corrupt-$((Get-Date).ToUniversalTime().ToString('yyyyMMddHHmmss'))"
+
+    Move-Item -LiteralPath $cachePath -Destination $backupPath -Force
+    $backupPath
+}
+
 # 載入Terminal-Icons
 if (Get-Module -ListAvailable -Name Terminal-Icons) { 
     try {
         Import-Module Terminal-Icons -ErrorAction Stop
     } catch {
-        Write-Warning "Failed to import Terminal-Icons: $($_.Exception.Message)"
+        $importMessage = $_.Exception.Message
+
+        if ($importMessage -match 'XmlNodeType|Import-Clixml|XML|parse|element') {
+            try {
+                Remove-Module Terminal-Icons -Force -ErrorAction SilentlyContinue
+                Reset-TerminalIconsUserCache | Out-Null
+                Import-Module Terminal-Icons -ErrorAction Stop
+            } catch {
+                Write-Warning "Failed to import Terminal-Icons after rebuilding cache: $($_.Exception.Message)"
+            }
+        } else {
+            Write-Warning "Failed to import Terminal-Icons: $importMessage"
+        }
     }
 }
 
