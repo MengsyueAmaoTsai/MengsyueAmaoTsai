@@ -124,6 +124,12 @@ git ls-remote origin refs/heads/master
 
 接著確認 `$env:POSH_THEME` 指向 `default.omp.json`，並使用 `oh-my-posh debug` 檢查 render 結果。
 
+### Terminal-Icons 顯示 CLIXML 或 dictionary entry 警告
+
+Terminal-Icons 0.11.0 會在匯入時重寫 `%APPDATA%\powershell\Community\Terminal-Icons` 內的共用 CLIXML 快取。若 Windows Terminal 與 VS Code 同時啟動多個 PowerShell process，未序列化的寫入可能使 XML 損壞。
+
+Repository 管理的 profile 會使用跨 process mutex 序列化 Terminal-Icons 匯入；若已存在損壞的 XML，則先將整個快取目錄改名保留，再由模組重建。部署 profile 更新後，請關閉並重新開啟 Windows Terminal 與 VS Code integrated terminal。
+
 ### Bootstrapper 執行到一半停止
 
 Bootstrapper 使用停止於錯誤的執行模式。任何下載、驗證、檔案寫入或 Windows service 設定失敗時，後續步驟都不會繼續。請處理畫面上顯示的第一個錯誤後重新執行。

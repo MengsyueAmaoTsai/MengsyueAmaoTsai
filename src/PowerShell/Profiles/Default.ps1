@@ -63,31 +63,67 @@ function Reset-TerminalIconsUserCache {
     }
 
     $parentPath = Split-Path -Parent $cachePath
-    $backupPath = Join-Path $parentPath "Terminal-Icons.corrupt-$((Get-Date).ToUniversalTime().ToString('yyyyMMddHHmmss'))"
+    $backupPath = Join-Path $parentPath "Terminal-Icons.corrupt-$((Get-Date).ToUniversalTime().ToString('yyyyMMddHHmmss'))-$PID"
 
     Move-Item -LiteralPath $cachePath -Destination $backupPath -Force
     $backupPath
 }
 
-# 載入Terminal-Icons
-if (Get-Module -ListAvailable -Name Terminal-Icons) { 
-    try {
-        Import-Module Terminal-Icons -ErrorAction Stop
-    } catch {
-        $importMessage = $_.Exception.Message
+function Import-TerminalIconsSafely {
+    $mutex = [Threading.Mutex]::new($false, 'Local\MengsyueAmaoTsai.TerminalIconsCache')
+    $lockTaken = $false
 
-        if ($importMessage -match 'XmlNodeType|Import-Clixml|XML|parse|element') {
+    try {
+        try {
+            $lockTaken = $mutex.WaitOne(15000)
+        }
+        catch [Threading.AbandonedMutexException] {
+            $lockTaken = $true
+        }
+
+        if (-not $lockTaken) {
+            Write-Warning 'Timed out waiting to import Terminal-Icons.'
+            return
+        }
+
+        try {
+            Import-Module Terminal-Icons -ErrorAction Stop
+        }
+        catch {
+            $importError = $_
+            $isCacheCorruption = (
+                $importError.Exception -is [System.Xml.XmlException] -or
+                $importError.FullyQualifiedErrorId -match 'Import-?CliXml' -or
+                $importError.Exception.Message -match 'XmlNodeType|dictionary entry|XML|parse|element'
+            )
+
+            if (-not $isCacheCorruption) {
+                Write-Warning "Failed to import Terminal-Icons: $($importError.Exception.Message)"
+                return
+            }
+
             try {
                 Remove-Module Terminal-Icons -Force -ErrorAction SilentlyContinue
                 Reset-TerminalIconsUserCache | Out-Null
                 Import-Module Terminal-Icons -ErrorAction Stop
-            } catch {
+            }
+            catch {
                 Write-Warning "Failed to import Terminal-Icons after rebuilding cache: $($_.Exception.Message)"
             }
-        } else {
-            Write-Warning "Failed to import Terminal-Icons: $importMessage"
         }
     }
+    finally {
+        if ($lockTaken) {
+            $mutex.ReleaseMutex()
+        }
+
+        $mutex.Dispose()
+    }
+}
+
+# Terminal-Icons 會在匯入時重寫共用的 CLIXML 快取；序列化匯入以避免多個終端同時寫壞檔案。
+if (Get-Module -ListAvailable -Name Terminal-Icons) {
+    Import-TerminalIconsSafely
 }
 
 # 載入 WebAdminstration
