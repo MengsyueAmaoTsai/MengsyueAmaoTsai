@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PSSCRIPTANALYZER_VERSION: 1.25.0
+  PESTER_VERSION: 6.0.1
+
+jobs:
+  verify:
+    name: Analyze and test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install PowerShell modules
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Install-Module -Name PSScriptAnalyzer -RequiredVersion $env:PSSCRIPTANALYZER_VERSION -Scope CurrentUser -Force
+          Install-Module -Name Pester -RequiredVersion $env:PESTER_VERSION -Scope CurrentUser -Force -SkipPublisherCheck
+
+      - name: PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Import-Module PSScriptAnalyzer -RequiredVersion $env:PSSCRIPTANALYZER_VERSION -Force
+          .\build\Invoke-Analyzer.ps1
+
+      - name: Pester
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Import-Module Pester -RequiredVersion $env:PESTER_VERSION -Force
+          .\build\Invoke-Tests.ps1
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pester-results
+          path: artifacts/testResults.xml
+          if-no-files-found: warn

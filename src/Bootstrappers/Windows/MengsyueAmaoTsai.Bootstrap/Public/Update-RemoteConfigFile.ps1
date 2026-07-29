@@ -1,18 +1,24 @@
-﻿. "$PSScriptRoot\Bootstrapper.Output.ps1"
-
-<#
+﻿<#
 .SYNOPSIS
     下載遠端設定檔，驗證內容後才覆蓋本機目的地。
 
 .DESCRIPTION
-    取代原本 Update-WindowsTerminalSettings / Update-PowerShellProfile /
-    Update-OhMyPoshTheme 三支骨架完全相同的腳本。三者只差來源 URL、目的地與驗證方式，
-    因此把驗證邏輯以 scriptblock 注入；新增一種設定檔只需在呼叫端多一筆資料，
-    不必再新增腳本，也不必修改本函式。
+    Windows Terminal 設定、PowerShell profile 與 Oh My Posh theme 的更新流程完全相同 —
+    下載到暫存檔、驗證、覆蓋目的地、清除暫存檔 — 只差來源 URL、目的地與驗證方式。
+    驗證邏輯以 scriptblock 注入，新增一種設定檔只需在呼叫端多一筆資料。
 
 .PARAMETER Validate
     接收暫存檔路徑的 scriptblock。內容不合法時應 throw；未提供則跳過驗證。
     驗證發生在覆蓋目的地之前，因此驗證失敗不會動到現有設定。
+
+.EXAMPLE
+    Update-RemoteConfigFile -Description 'Oh My Posh theme' `
+        -Uri 'https://example.invalid/default.omp.json' `
+        -Destination "$env:USERPROFILE\Documents\PowerShell\default.omp.json" `
+        -Validate {
+            param($Path)
+            if (-not (Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json).blocks) { throw 'No blocks.' }
+        }
 #>
 function Update-RemoteConfigFile {
     [CmdletBinding(SupportsShouldProcess)]

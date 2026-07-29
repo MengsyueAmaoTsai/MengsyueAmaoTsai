@@ -1,8 +1,7 @@
 ﻿$ErrorActionPreference = 'Stop'
 
-. "$PSScriptRoot\Bootstrapper.Output.ps1"
-. "$PSScriptRoot\Bootstrapper.RemoteConfig.ps1"
-. "$PSScriptRoot\Bootstrapper.Services.ps1"
+# 模組與本腳本同層，因此 repository 內與部署到 C:\Bootstrapper 之後都是同一條路徑。
+Import-Module (Join-Path $PSScriptRoot 'MengsyueAmaoTsai.Bootstrap\MengsyueAmaoTsai.Bootstrap.psd1') -Force
 
 $repositoryRawUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master'
 
@@ -60,16 +59,16 @@ $managedServices = @(
     @{ Name = 'vstsagent.richill-capital.Default.FUTURESAI-DEV-M'; DisplayName = 'Azure DevOps Agent' }
 )
 
-$gitSettings = @(
-    @{ Name = 'core.autocrlf'; Value = 'true' }
-    @{ Name = 'core.editor'; Value = 'code --wait' }
-    @{ Name = 'core.sshcommand'; Value = 'C:/Windows/System32/OpenSSH/ssh.exe' }
-    @{ Name = 'user.name'; Value = 'Mengsyue Amao Tsai' }
-    @{ Name = 'user.email'; Value = 'mengsyue.tsai@outlook.com' }
-    @{ Name = 'commit.gpgsign'; Value = 'true' }
-    @{ Name = 'color.ui'; Value = 'auto' }
-    @{ Name = 'gpg.program'; Value = 'C:\Program Files\GnuPG\bin\gpg.exe' }
-)
+$gitSettings = [ordered]@{
+    'core.autocrlf'  = 'true'
+    'core.editor'    = 'code --wait'
+    'core.sshcommand' = 'C:/Windows/System32/OpenSSH/ssh.exe'
+    'user.name'      = 'Mengsyue Amao Tsai'
+    'user.email'     = 'mengsyue.tsai@outlook.com'
+    'commit.gpgsign' = 'true'
+    'color.ui'       = 'auto'
+    'gpg.program'    = 'C:\Program Files\GnuPG\bin\gpg.exe'
+}
 
 Write-BootstrapperBanner
 
@@ -81,9 +80,8 @@ foreach ($remoteConfigFile in $remoteConfigFiles) {
 
 Write-BootstrapperSection 'Services and agents'
 
-# 安裝、設定與金鑰載入的流程各自不同，維持獨立腳本。
-. "$PSScriptRoot\Ensure-Service-Gpg.ps1"
-. "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
+Initialize-GpgAgent
+Initialize-SshAgent
 
 foreach ($managedService in $managedServices) {
     Start-ManagedService @managedService
@@ -91,14 +89,7 @@ foreach ($managedService in $managedServices) {
 
 Write-BootstrapperSection 'Git'
 
-foreach ($setting in $gitSettings) {
-    & git config --global $setting.Name $setting.Value
-    if ($LASTEXITCODE -ne 0) {
-        throw "Failed to configure Git setting '$($setting.Name)'. ExitCode=$LASTEXITCODE"
-    }
-}
-
-Write-BootstrapperStatus -Level OK -Message 'Global settings configured'
+Set-GitGlobalConfiguration -Setting $gitSettings
 
 # =====================================================================================================================
 ## Launch productivity applications (uncomment to enable)

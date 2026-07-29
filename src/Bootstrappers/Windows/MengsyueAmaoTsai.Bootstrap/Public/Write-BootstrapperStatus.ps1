@@ -1,20 +1,12 @@
-function Write-BootstrapperBanner {
-    Write-Host ''
-    Write-Host 'Windows workstation bootstrap' -ForegroundColor Cyan
-    Write-Host '--------------------------------' -ForegroundColor DarkGray
-}
+﻿<#
+.SYNOPSIS
+    輸出單一步驟的執行結果。
 
-function Write-BootstrapperSection {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Name
-    )
-
-    Write-Host ''
-    Write-Host ":: $Name" -ForegroundColor Cyan
-}
-
+.DESCRIPTION
+    SKIP 表示選用元件未安裝，不視為錯誤；WARN 表示需要留意但流程可以繼續。
+#>
 function Write-BootstrapperStatus {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
         [ValidateSet('OK', 'INFO', 'SKIP', 'WARN', 'FAIL')]

@@ -142,6 +142,37 @@ Bootstrapper 使用停止於錯誤的執行模式。任何下載、驗證、檔�
 pwsh -NoProfile -ExecutionPolicy Bypass -File .\src\Bootstrappers\Windows\Start-Bootstrapper.ps1
 ```
 
+## 專案結構
+
+Bootstrapper 的邏輯集中在 `MengsyueAmaoTsai.Bootstrap` 模組，`Start-Bootstrapper.ps1` 只負責宣告資料與編排流程：
+
+```text
+src/Bootstrappers/Windows/
+  Start-Bootstrapper.ps1                    入口：設定資料表 + 流程編排
+  MengsyueAmaoTsai.Bootstrap/
+    MengsyueAmaoTsai.Bootstrap.psd1         manifest
+    MengsyueAmaoTsai.Bootstrap.psm1         載入 Private/ 與 Public/
+    Public/                                 對外函式（8 個）
+    Private/                                模組內部函式
+```
+
+模組與入口腳本同層，因此 repository 內與部署到 `C:\Bootstrapper` 之後都是同一條匯入路徑。
+
+新增一個遠端設定檔或選用服務時，只需要在 `Start-Bootstrapper.ps1` 的 `$remoteConfigFiles` 或 `$managedServices` 加一筆資料，不需要新增腳本。
+
+## 開發與驗證
+
+Commit 之前在本機跑與 CI 完全相同的兩支腳本：
+
+```powershell
+.\build\Invoke-Analyzer.ps1   # PSScriptAnalyzer，任何 finding 都會失敗
+.\build\Invoke-Tests.ps1      # Pester，結果輸出到 artifacts\testResults.xml
+```
+
+規則例外集中在 `PSScriptAnalyzerSettings.psd1`，每一條都附有理由。
+
+GitHub Actions 的 `CI` workflow 會在 push、pull request 與手動觸發時於 `windows-latest` 執行同樣的兩個步驟，並把 Pester 結果上傳為 artifact。
+
 ## 安全說明
 
 Bootstrapper 會覆蓋本機設定，而且下載的 PowerShell profile 會在之後的 terminal session 執行。執行前應確認 repository、branch 與最新 commit 都是可信任的內容。
