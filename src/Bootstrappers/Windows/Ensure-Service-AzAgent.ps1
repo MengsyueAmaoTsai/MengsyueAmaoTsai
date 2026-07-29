@@ -1,6 +1,6 @@
 . "$PSScriptRoot\Bootstrapper.Output.ps1"
 
-$agentServiceName = "vstsagent.richill-capital.Default.FUTURESAI-DEV-MENGS"
+$agentServiceName = "vstsagent.richill-capital.Default.FUTURESAI-DEV-M"
 $agentService = Get-Service -Name $agentServiceName -ErrorAction Silently
 
 if ($null -ne $agentService) {
