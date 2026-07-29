@@ -13,24 +13,49 @@ $env:TZ = 'UTC'  # 統一時區為 UTC
 $PSStyle.OutputRendering = 'Host'  # 固定輸出渲染行為，減少不同終端造成的可讀性差異
 $MaximumHistoryCount = 5000  # 限制指令歷史數量，兼顧追溯需求與本機資料暴露風險
 
-# set ms build to environment path
-$vswherePath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+# 僅在 PATH 尚未包含該目錄時才附加，避免每開一個終端就疊一份重複路徑。
+function Add-PathEntry {
+    param(
+        [Parameter(Mandatory)] [string]$Directory
+    )
 
-if (Test-Path $vswherePath) {
-    $msbuildPath = & $vswherePath -latest -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
+    if (-not (Test-Path -LiteralPath $Directory)) {
+        return
+    }
 
-    if ($msbuildPath) {
-        $env:PATH += ";$($msbuildPath | Split-Path -Parent)"
+    $normalized = $Directory.TrimEnd('\')
+    $isPresent = $env:PATH -split ';' | Where-Object { $_ -and $_.TrimEnd('\') -ieq $normalized }
+
+    if ($isPresent) {
+        return
+    }
+
+    $env:PATH += ";$Directory"
+}
+
+# MSBuild：已可從 PATH 解析（例如已寫入 user 環境變數）就不必再呼叫 vswhere。
+if (-not (Get-Command MSBuild.exe -ErrorAction SilentlyContinue)) {
+    $vswherePath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+
+    if (Test-Path $vswherePath) {
+        $msbuildPath = & $vswherePath -latest -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Select-Object -First 1
+
+        if ($msbuildPath) {
+            Add-PathEntry -Directory ($msbuildPath | Split-Path -Parent)
+        }
     }
 }
 
-# set tlbimp to environment path. 
-$windowsSdkPath = "${env:ProgramFiles(x86)}\Microsoft SDKs\Windows"
-if (Test-Path $windowsSdkPath) {
-    $tlbimpPath = Get-ChildItem -Path $windowsSdkPath -Recurse -Filter "tlbimp.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+# tlbimp：遞迴掃描整個 Windows SDK 目錄很慢，已可從 PATH 解析就直接跳過掃描。
+if (-not (Get-Command tlbimp.exe -ErrorAction SilentlyContinue)) {
+    $windowsSdkPath = "${env:ProgramFiles(x86)}\Microsoft SDKs\Windows"
 
-    if ($tlbimpPath) {
-        $env:PATH += ";$($tlbimpPath.DirectoryName)"
+    if (Test-Path $windowsSdkPath) {
+        $tlbimpPath = Get-ChildItem -Path $windowsSdkPath -Recurse -Filter "tlbimp.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+
+        if ($tlbimpPath) {
+            Add-PathEntry -Directory $tlbimpPath.DirectoryName
+        }
     }
 }
 
