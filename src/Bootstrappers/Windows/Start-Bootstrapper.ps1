@@ -1,22 +1,64 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 
 . "$PSScriptRoot\Bootstrapper.Output.ps1"
+. "$PSScriptRoot\Bootstrapper.RemoteConfig.ps1"
+. "$PSScriptRoot\Bootstrapper.Services.ps1"
 
-Write-BootstrapperBanner
-Write-BootstrapperSection 'Settings'
+$repositoryRawUrl = 'https://raw.githubusercontent.com/MengsyueAmaoTsai/MengsyueAmaoTsai/refs/heads/master'
 
-& "$PSScriptRoot\Update-WindowsTerminalSettings.ps1"
-& "$PSScriptRoot\Update-PowerShellProfile.ps1"
-& "$PSScriptRoot\Update-OhMyPoshTheme.ps1"
+# 遠端設定檔。新增一種設定只需在這裡加一筆，不必新增腳本。
+$remoteConfigFiles = @(
+    @{
+        Description = 'Windows Terminal settings'
+        Uri         = "$repositoryRawUrl/src/WindowsTerminal/default.json"
+        Destination = @("$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
+        Validate    = {
+            param($Path)
 
-Write-BootstrapperSection 'Services and agents'
-. "$PSScriptRoot\Ensure-Service-Gpg.ps1"
-. "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
-. "$PSScriptRoot\Ensure-Service-SonarQube.ps1"
-. "$PSScriptRoot\Ensure-Service-IIS.ps1"
-. "$PSScriptRoot\Ensure-Service-AzAgent.ps1"
+            $settings = Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json -ErrorAction Stop
+            if ($null -eq $settings.profiles) {
+                throw 'The downloaded Windows Terminal settings do not contain a profiles section.'
+            }
+        }
+    }
+    @{
+        Description = 'PowerShell profiles'
+        Uri         = "$repositoryRawUrl/src/PowerShell/Profiles/Default.ps1"
+        Destination = @(
+            "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+            "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1"
+        )
+        Validate    = {
+            param($Path)
 
-Write-BootstrapperSection 'Git'
+            $parseErrors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($Path, [ref]$null, [ref]$parseErrors) | Out-Null
+            if ($parseErrors.Count -gt 0) {
+                throw "The downloaded PowerShell profile is invalid: $($parseErrors[0].Message)"
+            }
+        }
+    }
+    @{
+        Description = 'Oh My Posh theme'
+        Uri         = "$repositoryRawUrl/src/OhMyPosh/Themes/default.omp.json"
+        Destination = @("$env:USERPROFILE\Documents\PowerShell\default.omp.json")
+        Validate    = {
+            param($Path)
+
+            $theme = Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json -ErrorAction Stop
+            if ($null -eq $theme.blocks -or $theme.blocks.Count -eq 0) {
+                throw 'The downloaded Oh My Posh theme does not contain any prompt blocks.'
+            }
+        }
+    }
+)
+
+# 選用服務：存在就確保啟動，不存在則跳過。
+$managedServices = @(
+    @{ Name = 'SonarQube'; DisplayName = 'SonarQube' }
+    @{ Name = 'W3SVC'; DisplayName = 'IIS' }
+    @{ Name = 'vstsagent.richill-capital.Default.FUTURESAI-DEV-M'; DisplayName = 'Azure DevOps Agent' }
+)
 
 $gitSettings = @(
     @{ Name = 'core.autocrlf'; Value = 'true' }
@@ -28,6 +70,26 @@ $gitSettings = @(
     @{ Name = 'color.ui'; Value = 'auto' }
     @{ Name = 'gpg.program'; Value = 'C:\Program Files\GnuPG\bin\gpg.exe' }
 )
+
+Write-BootstrapperBanner
+
+Write-BootstrapperSection 'Settings'
+
+foreach ($remoteConfigFile in $remoteConfigFiles) {
+    Update-RemoteConfigFile @remoteConfigFile
+}
+
+Write-BootstrapperSection 'Services and agents'
+
+# 安裝、設定與金鑰載入的流程各自不同，維持獨立腳本。
+. "$PSScriptRoot\Ensure-Service-Gpg.ps1"
+. "$PSScriptRoot\Ensure-Service-SshAgent.ps1"
+
+foreach ($managedService in $managedServices) {
+    Start-ManagedService @managedService
+}
+
+Write-BootstrapperSection 'Git'
 
 foreach ($setting in $gitSettings) {
     & git config --global $setting.Name $setting.Value
