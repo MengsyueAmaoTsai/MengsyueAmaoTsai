@@ -13,7 +13,9 @@ $env:TZ = 'UTC'  # 統一時區為 UTC
 $PSStyle.OutputRendering = 'Host'  # 固定輸出渲染行為，減少不同終端造成的可讀性差異
 $MaximumHistoryCount = 5000  # 限制指令歷史數量，兼顧追溯需求與本機資料暴露風險
 
-# 僅在 PATH 尚未包含該目錄時才附加，避免每開一個終端就疊一份重複路徑。
+# =====================================================================================================================
+# 環境變數 PATH 設定
+# =====================================================================================================================
 function Add-PathEntry {
     param(
         [Parameter(Mandatory)] [string]$Directory
@@ -157,26 +159,6 @@ if (Get-Module -ListAvailable -Name WebAdministration) {
 }
 
 # =====================================================================================================================
-# Custom Functions
-# =====================================================================================================================
-function Write-Log {  
-    param(  
-        [Parameter(Mandatory)] [string]$Message,  
-        [ValidateSet('INFO','WARN','ERROR')] [string]$Level = 'INFO'  
-    )  
-
-    $timestamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')  
-
-    $color = switch ($Level) {  
-        'INFO'  { 'Green' }  
-        'WARN'  { 'Yellow' }  
-        'ERROR' { 'Red' }  
-    }
-    
-    Write-Host "[$timestamp] [$Level] - $Message" -ForegroundColor $color
-}  
-
-# =====================================================================================================================
 # Prompt Customization with oh-my-posh
 # =====================================================================================================================
 if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
@@ -193,7 +175,7 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
         if (Test-Path $fallbackTheme) {
             $themeToUse = $fallbackTheme
         } else {
-            Write-Log -Message "Fallback theme not found: $fallbackTheme" -Level 'WARN'
+            Write-Warning "Fallback theme not found: $fallbackTheme"
         }
     }
 
@@ -202,6 +184,6 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
         oh-my-posh init pwsh --config $env:POSH_THEME | Invoke-Expression
     }    
 } else {
-    Write-Log -Message "oh-my-posh not found, skipping prompt customization." -Level 'WARN'
+    Write-Warning 'oh-my-posh not found, skipping prompt customization.'
 }
 
