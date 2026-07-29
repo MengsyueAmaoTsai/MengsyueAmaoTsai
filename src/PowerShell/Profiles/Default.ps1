@@ -1,4 +1,4 @@
-Set-StrictMode -Version Latest # 啟用最嚴格語法/變數檢查，避免因拼字或未初始化變數造成交易腳本誤判
+﻿Set-StrictMode -Version Latest # 啟用最嚴格語法/變數檢查，避免因拼字或未初始化變數造成交易腳本誤判
 $ErrorActionPreference = 'Stop'  # 將非終止錯誤改為終止錯誤，確保流程在異常時立即停止
 # =====================================================================================================================
 # Global Setup
@@ -63,18 +63,21 @@ if (-not (Get-Command tlbimp.exe -ErrorAction SilentlyContinue)) {
 
 
 # =====================================================================================================================
-# Import Modules 
+# Import Modules
 # =====================================================================================================================
 # 載入 PSReadLine
-if ((Get-Module -ListAvailable -Name PSReadLine) -and $host.Name -eq 'ConsoleHost') { 
-    Import-Module PSReadLine 
-}  
+if ((Get-Module -ListAvailable -Name PSReadLine) -and $host.Name -eq 'ConsoleHost') {
+    Import-Module PSReadLine
+}
 
 # 設定 PSReadLine
-if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) { 
-}  
+if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
+}
 
 function Reset-TerminalIconsUserCache {
+    [CmdletBinding(SupportsShouldProcess)]
+    param()
+
     $basePath = $env:APPDATA
     if (-not $basePath) {
         $basePath = [Environment]::GetFolderPath('ApplicationData')
@@ -91,6 +94,10 @@ function Reset-TerminalIconsUserCache {
 
     $parentPath = Split-Path -Parent $cachePath
     $backupPath = Join-Path $parentPath "Terminal-Icons.corrupt-$((Get-Date).ToUniversalTime().ToString('yyyyMMddHHmmss'))-$PID"
+
+    if (-not $PSCmdlet.ShouldProcess($cachePath, 'Move corrupt Terminal-Icons cache aside')) {
+        return $null
+    }
 
     Move-Item -LiteralPath $cachePath -Destination $backupPath -Force
     $backupPath
@@ -154,8 +161,8 @@ if (Get-Module -ListAvailable -Name Terminal-Icons) {
 }
 
 # 載入 WebAdminstration
-if (Get-Module -ListAvailable -Name WebAdministration) { 
-    Import-Module WebAdministration 
+if (Get-Module -ListAvailable -Name WebAdministration) {
+    Import-Module WebAdministration
 }
 
 # =====================================================================================================================
@@ -182,7 +189,7 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
     if ($themeToUse) {
         $env:POSH_THEME = $themeToUse
         oh-my-posh init pwsh --config $env:POSH_THEME | Invoke-Expression
-    }    
+    }
 } else {
     Write-Warning 'oh-my-posh not found, skipping prompt customization.'
 }

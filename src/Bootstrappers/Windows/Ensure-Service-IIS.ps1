@@ -1,7 +1,7 @@
 . "$PSScriptRoot\Bootstrapper.Output.ps1"
 
 $iisServiceName = "W3SVC"
-$iisService = Get-Service -Name $iisServiceName -ErrorAction Silently
+$iisService = Get-Service -Name $iisServiceName -ErrorAction SilentlyContinue
 
 if ($null -ne $iisService) {
     if ($iisService.Status -ne 'Running') {

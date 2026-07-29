@@ -1,7 +1,7 @@
 . "$PSScriptRoot\Bootstrapper.Output.ps1"
 
 $sonarServiceName = "SonarQube"
-$sonarService = Get-Service -Name $sonarServiceName -ErrorAction Silently
+$sonarService = Get-Service -Name $sonarServiceName -ErrorAction SilentlyContinue
 
 if ($null -ne $sonarService) {
     if ($sonarService.Status -ne 'Running') {

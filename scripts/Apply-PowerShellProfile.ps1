@@ -1,12 +1,11 @@
-$principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+﻿#Requires -RunAsAdministrator
 
-if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    throw "Please run this script as Administrator."
-}
+$ErrorActionPreference = 'Stop'
 
-$rootDirectory = (Get-Location).Path
+# 用腳本所在路徑推導 repository 根目錄，不依賴目前工作目錄
+$rootDirectory = Split-Path -Parent $PSScriptRoot
 
-$profileContent = Get-Content -Path "$rootDirectory\src\PowerShell\Profiles\Default.ps1" -Raw
+$profileContent = Get-Content -LiteralPath "$rootDirectory\src\PowerShell\Profiles\Default.ps1" -Raw
 
-Set-Content -Path "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value $profileContent -Force
-Set-Content -Path "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1" -Value $profileContent -Force
+Set-Content -LiteralPath "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value $profileContent -Force
+Set-Content -LiteralPath "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1" -Value $profileContent -Force

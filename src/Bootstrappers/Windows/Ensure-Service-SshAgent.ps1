@@ -1,7 +1,7 @@
-. "$PSScriptRoot\Bootstrapper.Output.ps1"
+﻿. "$PSScriptRoot\Bootstrapper.Output.ps1"
 
 $serviceName = "ssh-agent"
-$sshKeyPath = "$env:USERPROFILE\.ssh\id_rsa" 
+$sshKeyPath = "$env:USERPROFILE\.ssh\id_rsa"
 
 # 1: 檢查 ssh-agent service
 $service = Get-Service $serviceName -ErrorAction SilentlyContinue

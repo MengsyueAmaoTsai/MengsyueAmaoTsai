@@ -1,7 +1,7 @@
 . "$PSScriptRoot\Bootstrapper.Output.ps1"
 
 $agentServiceName = "vstsagent.richill-capital.Default.FUTURESAI-DEV-M"
-$agentService = Get-Service -Name $agentServiceName -ErrorAction Silently
+$agentService = Get-Service -Name $agentServiceName -ErrorAction SilentlyContinue
 
 if ($null -ne $agentService) {
     if ($agentService.Status -ne 'Running') {

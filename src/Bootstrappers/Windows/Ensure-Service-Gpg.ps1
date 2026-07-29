@@ -1,4 +1,4 @@
-. "$PSScriptRoot\Bootstrapper.Output.ps1"
+﻿. "$PSScriptRoot\Bootstrapper.Output.ps1"
 
 $gpgId = "GnuPG.Gpg4win"
 $gpgCommand = Get-Command gpg.exe -ErrorAction SilentlyContinue

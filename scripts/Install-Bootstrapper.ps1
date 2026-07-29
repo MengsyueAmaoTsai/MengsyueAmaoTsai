@@ -1,15 +1,11 @@
+﻿#Requires -RunAsAdministrator
+
 $ErrorActionPreference = 'Stop'
 
 # 用腳本所在路徑，不依賴目前工作目錄
 $rootDirectory = Split-Path -Parent $PSScriptRoot
 $bootstrapperDirectory = Join-Path $rootDirectory "src\Bootstrappers\Windows"
 $targetDirectory = "C:\Bootstrapper"
-
-# ===== 需要系統管理員權限 =====
-$principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    throw "Please run this script as Administrator."
-}
 
 # 刪除舊的 bootstrapper
 if (Test-Path -Path $targetDirectory) {

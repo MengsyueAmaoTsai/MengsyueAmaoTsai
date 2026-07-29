@@ -1,11 +1,10 @@
-$principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+﻿#Requires -RunAsAdministrator
 
-if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    throw "Please run this script as Administrator."
-}
+$ErrorActionPreference = 'Stop'
 
-$rootDirectory = (Get-Location).Path
+# 用腳本所在路徑推導 repository 根目錄，不依賴目前工作目錄
+$rootDirectory = Split-Path -Parent $PSScriptRoot
 
-$settingsContent = Get-Content -Path "$rootDirectory\src\WindowsTerminal\default.json" -Raw
+$settingsContent = Get-Content -LiteralPath "$rootDirectory\src\WindowsTerminal\default.json" -Raw
 
-Set-Content -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Value $settingsContent -Force
+Set-Content -LiteralPath "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Value $settingsContent -Force
