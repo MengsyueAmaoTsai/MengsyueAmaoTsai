@@ -61,6 +61,24 @@ if (-not (Get-Command tlbimp.exe -ErrorAction SilentlyContinue)) {
     }
 }
 
+# cTrader CLI：官方安裝位置是 %LOCALAPPDATA%\Spotware\cTrader\{installationId}。
+# installationId 是安裝時產生的雜湊目錄名，而且每個券商的 cTrader 會各自安裝一份，
+# 所以不能寫死路徑 —— 掃描出真的含有 ctrader-cli.exe 的安裝，取最近更新的那一個。
+if (-not (Get-Command ctrader-cli.exe -ErrorAction SilentlyContinue)) {
+    $cTraderRoot = Join-Path $env:LOCALAPPDATA 'Spotware\cTrader'
+
+    if (Test-Path -LiteralPath $cTraderRoot) {
+        $cTraderInstallation = Get-ChildItem -LiteralPath $cTraderRoot -Directory -ErrorAction SilentlyContinue |
+            Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'ctrader-cli.exe') } |
+            Sort-Object -Property LastWriteTimeUtc -Descending |
+            Select-Object -First 1
+
+        if ($cTraderInstallation) {
+            Add-PathEntry -Directory $cTraderInstallation.FullName
+        }
+    }
+}
+
 
 # =====================================================================================================================
 # Import Modules
