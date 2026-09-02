@@ -66,6 +66,10 @@ if (-not (Get-Command ctrader-cli.exe -ErrorAction SilentlyContinue)) {
     Add-PathEntry -Directory (Join-Path $env:LOCALAPPDATA 'Programs\cTrader CLI')
 }
 
+# Nodepad++ CLI：安裝在 %ProgramFiles%\Notepad++，目錄名固定，直接加入 PATH。
+if (-not (Get-Command npp.exe -ErrorAction SilentlyContinue)) {
+    Add-PathEntry -Directory (Join-Path $env:ProgramFiles 'Notepad++')
+}
 
 # =====================================================================================================================
 # Import Modules
