@@ -71,6 +71,22 @@ if (-not (Get-Command npp.exe -ErrorAction SilentlyContinue)) {
     Add-PathEntry -Directory (Join-Path $env:ProgramFiles 'Notepad++')
 }
 
+# Android SDK：adb（platform-tools）、emulator、avdmanager／sdkmanager（cmdline-tools）。MAUI 用的 SDK 在
+# %LOCALAPPDATA%\Android\Sdk；有設 ANDROID_HOME 時以它為準。
+$androidSdk = if ($env:ANDROID_HOME) { $env:ANDROID_HOME } else { Join-Path $env:LOCALAPPDATA 'Android\Sdk' }
+
+if (-not (Get-Command adb.exe -ErrorAction SilentlyContinue)) {
+    Add-PathEntry -Directory (Join-Path $androidSdk 'platform-tools')
+}
+
+if (-not (Get-Command emulator.exe -ErrorAction SilentlyContinue)) {
+    Add-PathEntry -Directory (Join-Path $androidSdk 'emulator')
+}
+
+if (-not (Get-Command avdmanager.bat -ErrorAction SilentlyContinue)) {
+    Add-PathEntry -Directory (Join-Path $androidSdk 'cmdline-tools\latest\bin')
+}
+
 # =====================================================================================================================
 # Import Modules
 # =====================================================================================================================
