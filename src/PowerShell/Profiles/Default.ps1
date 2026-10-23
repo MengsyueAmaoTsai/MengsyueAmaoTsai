@@ -87,6 +87,18 @@ if (-not (Get-Command avdmanager.bat -ErrorAction SilentlyContinue)) {
     Add-PathEntry -Directory (Join-Path $androidSdk 'cmdline-tools\latest\bin')
 }
 
+# Android build-tools：apksigner、aapt2、zipalign，用來檢查 dotnet publish 產出的 APK 簽章與 manifest。目錄名是版本號、
+# 可能多版並存，取版本最新的一個。
+if (-not (Get-Command apksigner.bat -ErrorAction SilentlyContinue)) {
+    $buildTools = Get-ChildItem -LiteralPath (Join-Path $androidSdk 'build-tools') -Directory -ErrorAction SilentlyContinue |
+        Sort-Object -Property { $version = $null; if ([version]::TryParse($_.Name, [ref]$version)) { $version } else { [version]'0.0' } } -Descending |
+        Select-Object -First 1
+
+    if ($buildTools) {
+        Add-PathEntry -Directory $buildTools.FullName
+    }
+}
+
 # =====================================================================================================================
 # Import Modules
 # =====================================================================================================================
